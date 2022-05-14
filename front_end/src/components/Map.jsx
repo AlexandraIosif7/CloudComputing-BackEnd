@@ -7,7 +7,7 @@ import {
     Input,
     Text,
     SkeletonText,
-    VStack,
+    VStack
 } from "@chakra-ui/react";
 import { FaLocationArrow, FaTimes } from "react-icons/fa";
 import {
@@ -18,7 +18,7 @@ import {
     DirectionsRenderer,
 } from "@react-google-maps/api";
 import { useRef, useState } from "react";
-
+import axios from "axios";
 
 const centerOfMap = { lat: 44.448, lng: 26.0991 };
 function Map() {
@@ -26,6 +26,7 @@ function Map() {
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
         libraries: ["places"],
     });
+
 
     const [map, setMap] = useState(/** @type google.maps.Map */(null));
     const [directionsResponse, setDirectionsResponse] = useState(null);
@@ -56,7 +57,28 @@ function Map() {
         setDirectionsResponse(results);
         setDistance(results.routes[0].legs[0].distance.text);
         setDuration(results.routes[0].legs[0].duration.text);
+
+
     }
+
+    async function saveRoute() {
+        const newRoute = {
+            origin: originRef.current.value,
+            destination: desinationRef.current.value,
+            distance: distance,
+            duration: duration
+        }
+
+        console.log(newRoute)
+        await axios.post(`${process.env.REACT_APP_API_URL}locations/add`, newRoute)
+            .then((res) => {
+                if (res.data !== null) {
+                    alert("Route added!");
+                }
+            });
+
+    }
+
 
     function clearRoute() {
         setDirectionsResponse(null);
@@ -67,7 +89,7 @@ function Map() {
     }
 
     return (
-        <VStack w="full" h="full" alignItems="flex-start">
+        <VStack w="full" h="full" alignItems="flex-start" >
             <Box
                 p={4}
                 borderRadius="lg"
@@ -107,12 +129,18 @@ function Map() {
                 <HStack spacing={4} mt={4} justifyContent="space-between">
                     <Text>Distance: {distance} </Text>
                     <Text>Duration: {duration} </Text>
-                    <IconButton
-                        aria-label="center back"
-                        icon={<FaLocationArrow />}
-                        isRound
-                        onClick={() => map.panTo(centerOfMap)}
-                    />
+                    <ButtonGroup>
+                        <Button colorScheme="pink" type="submit" onClick={saveRoute} >
+                            Save Route
+                        </Button>
+                        <IconButton
+                            aria-label="center back"
+                            icon={<FaLocationArrow />}
+                            isRound
+                            onClick={() => map.panTo(centerOfMap)}
+                        />
+                    </ButtonGroup>
+
                 </HStack>
             </Box>
 
