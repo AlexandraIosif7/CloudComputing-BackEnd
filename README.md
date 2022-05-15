@@ -75,7 +75,7 @@ Pentru utilizarea celor *3 API din serviciul Google Maps* a fost nevoie de gener
 ## 5. Referinte
 Link-ul public catre aplicatie: https://limitless-mountain-65168.herokuapp.com/ 
 
-Link demo aplicatie YouTube:
+Link demo aplicatie YouTube: https://youtu.be/WEgF2woFtRo 
 
 
 
