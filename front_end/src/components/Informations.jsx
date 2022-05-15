@@ -1,4 +1,4 @@
-import { VStack, Box, Heading, Center, ListItem, HStack, Text, Input, Button, UnorderedList, IconButton } from "@chakra-ui/react";
+import { VStack, Box, Heading, Center, ListItem, Divider, HStack, Text, Input, Button, UnorderedList, IconButton } from "@chakra-ui/react";
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { FaTimes } from "react-icons/fa";
@@ -35,7 +35,8 @@ function Informations() {
         await axios.delete(`${process.env.REACT_APP_API_URL}locations/delete/${id}`)
             .then((res) => {
                 if (res.data !== null) {
-                    alert("Route deleted!");
+                    //alert("Route deleted!");
+                    window.location.reload(false);
                 }
             });
     }
@@ -55,13 +56,8 @@ function Informations() {
             setSpecificRoutes(result.data);
             //console.log(result.data)
         }
+
     };
-
-
-
-
-
-
 
 
     return (
@@ -94,7 +90,7 @@ function Informations() {
                     )
                         : <Text> No routes yet</Text>
                     }
-
+                    <Divider mt={4} orientation='horizontal' />
                 </UnorderedList>
                 <HStack spacing={4} mt={4} justifyContent="space-between">
                     <Center><Text mb={4} color='gray.500'> Search for a specific location: </Text></Center>

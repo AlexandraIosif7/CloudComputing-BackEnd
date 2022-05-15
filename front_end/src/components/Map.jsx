@@ -73,7 +73,8 @@ function Map() {
         await axios.post(`${process.env.REACT_APP_API_URL}locations/add`, newRoute)
             .then((res) => {
                 if (res.data !== null) {
-                    alert("Route added!");
+                    //alert("Route added!");
+                    window.location.reload(false);
                 }
             });
 

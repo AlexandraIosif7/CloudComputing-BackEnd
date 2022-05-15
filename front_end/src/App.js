@@ -1,7 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import Informations from "./components/Informations";
 import Map from "./components/Map";
-import { useState } from "react";
 
 function App() {
 
